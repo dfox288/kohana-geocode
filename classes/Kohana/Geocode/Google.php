@@ -97,8 +97,8 @@ class Kohana_Geocode_Google extends Geocode
 		$cache = ( ! empty($this->_config['cache'])) ? HTTP_Cache::factory($this->_config['cache']) : NULL;
 		
 		// Create the request
-		$request = Request::factory($this->api_url($params), $cache);
-		
+//		$request = Request::factory($this->api_url($params), $cache);
+
 		// Setup the retry counter and retry delay
 		$remaining_attempts = isset($this->_config['attempts']) ? $this->_config['attempts'] : 10;
 		$retry_delay = isset($this->_config['retry_delay']) ? $this->_config['retry_delay'] : 100000;
@@ -106,9 +106,12 @@ class Kohana_Geocode_Google extends Geocode
 		// Enter the request/retry loop.
 		while ($remaining_attempts > 0)
 		{
-			$response = $request->execute();
-			$geo_data = json_decode($response->body());
-			
+//			$response = $request->execute();
+//			$geo_data = json_decode($response->body());
+
+            $response = file_get_contents($this->api_url($params));
+            $geo_data = json_decode($response);
+
 			switch ($geo_data->status)
 			{
 				case self::OK:
