@@ -1,0 +1,8 @@
+{
+    "minimum-stability": "dev",
+    "name": "external/geocode",
+    "type": "kohana-module",
+    "description": "A Kohana module for geocoding",
+    "keywords": ["kohana", "geocoding"],
+    "homepage": "https://github.com/dfox288/kohana-geocode"
+}
