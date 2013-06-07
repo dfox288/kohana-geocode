@@ -109,7 +109,21 @@ class Kohana_Geocode_Google extends Geocode
 //			$response = $request->execute();
 //			$geo_data = json_decode($response->body());
 
-            $response = file_get_contents($this->api_url($params));
+			if (isset($_SERVER['HTTP_PROXY']))
+			{
+        		$aContext = array(
+                	'http' => array(
+                		'proxy' => str_replace('http', 'tcp', $_SERVER['HTTP_PROXY']),
+                		'request_fulluri' => true,
+                	),
+        		);
+        		$cxContext = stream_context_create($aContext);
+				$response = file_get_contents($this->api_url($params), FALSE, $cxContext);
+			}
+			else
+			{
+				$response = file_get_contents($this->api_url($params));
+			}
             $geo_data = json_decode($response);
 
 			switch ($geo_data->status)
